@@ -6,6 +6,6 @@ $db_name="ShopKart";
 
 $con = mysqli_connect($db_host,$db_username,$db_pass,$db_name) or die("could not connect to mysql");
 mysqli_select_db($con,$db_name) or die ("no databse");
-
-define('BASEURL','/ShopKart/');
+require '../config.php';
+require '../helpers/helpers.php';
 ?>
