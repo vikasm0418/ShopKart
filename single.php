@@ -1,23 +1,117 @@
-<?php include 'includes/head.php' ;
-	  include 'includes/nav.php' ;		
+<?php
+	require 'storescripts/connect_to_mysql.php';
 ?>
-<body>	
-<?php include 'includes/category.php' ?>
-				<div class="col-md-9 product-price1">
-				<div class="col-md-5 single-top">	
-			<div class="flexslider">
+<?php include 'includes/head.php' ;
+	  include 'includes/nav.php' ;	
+	  $product_id = $_GET['id'];		
+?>
+
+<body>
+		<div class="product">
+			<div class="container">
+				<div class="col-md-3 product-price">
+					  
+				<div class=" rsidebar span_1_of_left">
+					<div class="of-left">
+						<h3 class="cate">Categories</h3>
+					</div>
+		 <ul class="menu">
+		<li class="item1"><a href="#">Men </a>
+			<ul class="cute">
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange Stuff </a></li>
+				<li class="subitem3"><a href="#">Automatic Fails </a></li>
+			</ul>
+		</li>
+		<li class="item2"><a href="#">Women </a>
+			<ul class="cute">
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange Stuff </a></li>
+				<li class="subitem3"><a href="#">Automatic Fails </a></li>
+			</ul>
+		</li>
+		<li class="item3"><a href="#">Kids</a>
+			<ul class="cute">
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange Stuff </a></li>
+				<li class="subitem3"><a href="#">Automatic Fails</a></li>
+			</ul>
+		</li>
+		<li class="item4"><a href="#">Accesories</a>
+			<ul class="cute">
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange Stuff </a></li>
+				<li class="subitem3"><a href="#">Automatic Fails</a></li>
+			</ul>
+		</li>
+				
+		<li class="item4"><a href="#">Shoes</a>
+			<ul class="cute">
+				<li class="subitem1"><a href="#">Cute Kittens </a></li>
+				<li class="subitem2"><a href="#">Strange Stuff </a></li>
+				<li class="subitem3"><a href="product.html">Automatic Fails </a></li>
+			</ul>
+		</li>
+	</ul>
+					</div>
+				<!--initiate accordion-->
+		<script type="text/javascript">
+			$(function() {
+			    var menu_ul = $('.menu > li > ul'),
+			           menu_a  = $('.menu > li > a');
+			    menu_ul.hide();
+			    menu_a.click(function(e) {
+			        e.preventDefault();
+			        if(!$(this).hasClass('active')) {
+			            menu_a.removeClass('active');
+			            menu_ul.filter(':visible').slideUp('normal');
+			            $(this).addClass('active').next().stop(true,true).slideDown('normal');
+			        } else {
+			            $(this).removeClass('active');
+			            $(this).next().stop(true,true).slideUp('normal');
+			        }
+			    });
+			
+			});
+		</script>
+<!---->
+	<div class="sellers">
+							<div class="of-left-in">
+								<h3 class="tag">Tags</h3>
+							</div>
+								<div class="tags">
+									<ul>
+										<li><a href="#">design</a></li>
+										<li><a href="#">fashion</a></li>
+										<li><a href="#">dress</a></li>
+										
+										<div class="clearfix"> </div>
+									</ul>
+								
+								</div>
+								
+		</div>
+				</div>
+<?php
+	$sql = "SELECT * FROM products WHERE id = $product_id";
+	$featured = mysqli_query($con,$sql);
+	$product = mysqli_fetch_assoc($featured);
+?>
+	<div class="col-md-9 product-price1">
+		<div class="col-md-5 single-top">		
+		<div class="flexslider">
   <ul class="slides">
-    <li data-thumb="images/si.jpg">
-      <img src="images/si.jpg" />
+    <li data-thumb="<?php echo $product["image"]; ?>">
+      <img src="<?php echo $product["image"]; ?>" />
     </li>
-    <li data-thumb="images/si1.jpg">
-      <img src="images/si1.jpg" />
+    <li data-thumb="<?php echo $product["img2"]; ?>">
+      <img src="<?php echo $product["img2"]; ?>" />
     </li>
-    <li data-thumb="images/si2.jpg">
-      <img src="images/si2.jpg" />
+    <li data-thumb="<?php echo $product["img3"]; ?>">
+      <img src="<?php echo $product["img3"]; ?>" />
     </li>
-    <li data-thumb="images/si.jpg">
-      <img src="images/si.jpg" />
+    <li data-thumb="<?php echo $product["image"]; ?>">
+      <img src="<?php echo $product["image"]; ?>" />
     </li>
   </ul>
 </div>
@@ -37,7 +131,7 @@ $(window).load(function() {
 					</div>	
 					<div class="col-md-7 single-top-in simpleCart_shelfItem">
 						<div class="single-para ">
-						<h4>Lorem Ipsum</h4>
+						<h4><?php echo $product["title"]; ?></h4>
 							<div class="star-on">
 								<ul class="star-footer">
 										<li><a href="#"><i> </i></a></li>
@@ -53,7 +147,7 @@ $(window).load(function() {
 							<div class="clearfix"> </div>
 							</div>
 							
-							<h5 class="item_price">$ 95.00</h5>
+							<h5 class="item_price"><?php echo $product['price']; ?></h5>
 							<div class="available">
 								<ul>
 									<li>Color
@@ -97,16 +191,8 @@ $(window).load(function() {
 	<ul class="cd-tabs-content">
 		<li data-content="fashion" >
 		<div class="facts">
-									  <p > iPhone 7 and iPhone 7 Plus are smartphones designed, developed, and marketed by Apple Inc. ... The iPhone 7's overall design is similar to the iPhone 6S, but introduces new color options, water and dust resistance, a new capacitive, static home button, and removes the 3.5 mm headphone jack.
-										<ul>
-											<li>Research</li>
-											<li>Design and Development</li>
-											<li>Porting and Optimization</li>
-											<li>System integration</li>
-											<li>Verification, Validation and Testing</li>
-											<li>Maintenance and Support</li>
-										</ul>         
-							        </div>
+			<p ><?php echo $product["description"]; ?></p>         
+		</div>
 
 </li>
 <li data-content="cinema" >
@@ -188,7 +274,7 @@ $(window).load(function() {
 		<div class="clearfix"> </div>
 		</div>
 		</div>
-<?php include 'includes/foot.php' ;	?>
+		<?php include 'includes/foot.php' ;	?>
 </body>
 </html>
 			

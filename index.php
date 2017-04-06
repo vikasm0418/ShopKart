@@ -21,6 +21,7 @@
         pager: true,
       });
     });
+     //event listener for product details   
   </script>
 			<div  id="top" class="callbacks_container">
 			<ul class="rslides" id="slider">
@@ -51,6 +52,10 @@
 
 	</div>
 	</div>
+<?php
+	$sql = "SELECT * FROM products WHERE featured = 1";
+	$featured = mysqli_query($con,$sql);
+?>
 
 <!--content-->
 <div class="content">
@@ -58,71 +63,20 @@
 	<div class="content-top">
 		<h1>NEW RELEASED</h1>
 		<div class="grid-in">
-			<div class="col-md-4 grid-top">
-				<a href="single.php" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/pi.jpg" alt="">
+			<?php while($product = mysqli_fetch_assoc($featured)) : ?>
+			<div class="col-md-4 grid-top" id="product" onclick="details(<?php echo $product["id"]; ?>)">
+				<a href="single.php?id=<?php echo $product['id'] ?>" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="<?php echo $product["image"]; ?>" alt="">
 							<div class="b-wrapper">
 									<h3 class="b-animate b-from-left    b-delay03 ">
-										<span>T-Shirt</span>	
+										<span><?php echo $product["title"]; ?></span>	
 									</h3>
 								</div>
 				</a>
 		
 
-			<p><a href="single.php">Contrary to popular</a></p>
+			<h1><a href="single.php"><?php echo $product["price"]; ?></a></h1>
 			</div>
-			<div class="col-md-4 grid-top">
-				<a href="single.php" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/pi1.jpg" alt="">
-					<div class="b-wrapper">
-									<h3 class="b-animate b-from-left    b-delay03 ">
-										<span>Shoe</span>	
-									</h3>
-								</div>
-				</a>
-			<p><a href="single.php">classical Latin</a></p>
-			</div>
-			<div class="col-md-4 grid-top">
-				<a href="single.php" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/pi2.jpg" alt="">
-					<div class="b-wrapper">
-									<h3 class="b-animate b-from-left    b-delay03 ">
-										<span>Bag</span>	
-									</h3>
-								</div>
-				</a>
-			<p><a href="single.php">undoubtable</a></p>
-			</div>
-					<div class="clearfix"> </div>
-		</div>
-		<div class="grid-in">
-			<div class="col-md-4 grid-top">
-				<a href="single.php" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/pi3.jpg" alt="">
-					<div class="b-wrapper">
-									<h3 class="b-animate b-from-left    b-delay03 ">
-										<span>Shirt</span>	
-									</h3>
-								</div>
-				</a>
-			<p><a href="single.php">suffered alteration</a></p>
-			</div>
-			<div class="col-md-4 grid-top">
-				<a href="single.php" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/pi4.jpg" alt="">
-					<div class="b-wrapper">
-									<h3 class="b-animate b-from-left    b-delay03 ">
-										<span>Bag</span>	
-									</h3>
-								</div>
-				</a>
-			<p><a href="single.php">Content here</a></p>
-			</div>
-			<div class="col-md-4 grid-top">
-				<a href="single.php" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/pi5.jpg" alt="">
-					<div class="b-wrapper">
-									<h3 class="b-animate b-from-left    b-delay03 ">
-										<span>Shoe</span>	
-									</h3>
-								</div>
-				</a>
-			<p><a href="single.php">readable content</a></p>
-			</div>
+			<?php endwhile; ?>
 					<div class="clearfix"> </div>
 		</div>
 	</div>
