@@ -3,7 +3,7 @@
 ?>
 <?php include 'includes/head.php' ;
 	  include 'includes/nav.php' ;	
-	  $product_id = $_GET['id'];		
+	  $product_id = $_GET['id'];	
 ?>
 
 <body>
@@ -94,8 +94,16 @@
 				</div>
 <?php
 	$sql = "SELECT * FROM products WHERE id = $product_id";
-	$featured = mysqli_query($con,$sql);
-	$product = mysqli_fetch_assoc($featured);
+	$product_query = mysqli_query($con,$sql);
+	$product = mysqli_fetch_assoc($product_query);
+	$brand_id = $product['brand'];
+	$sql1 ="SELECT * FROM brand WHERE id = $brand_id";
+	$brand_query = mysqli_query($con,$sql1);
+	$brand = mysqli_fetch_assoc($brand_query);
+	$sizes = $product['sizes'];	
+	$size_array = explode(',',$sizes);
+	$color = $product['color'];
+	$color_array = explode(',',$color);
 ?>
 	<div class="col-md-9 product-price1">
 		<div class="col-md-5 single-top">		
@@ -150,28 +158,30 @@ $(window).load(function() {
 							<h5 class="item_price"><?php echo $product['price']; ?></h5>
 							<div class="available">
 								<ul>
-									<li>Color
-										<select>
-										<option>Silver</option>
-										<option>Black</option>
-										<option>Dark Black</option>
-										<option>Red</option>
+									<li>Color<select>
+									<?php foreach ($color_array as $key => $string) {								
+									echo "<option>".$string."</option>";
+								}?>
 									</select></li>
+							
 								<li class="size-in">Size<select>
-									<option>Large</option>
-									<option>Medium</option>
-									<option>small</option>
-									<option>Large</option>
-									<option>small</option>
+									<?php foreach ($size_array as $key => $string) {
+									$string_array = explode(':', $string);
+									$size = $string_array[0];
+									$quantity = $string_array[1];
+								
+									echo "<option>".$size." ( ".$quantity." available )</option>";
+								}
+									?>
 								</select></li>
 								<div class="clearfix"> </div>
 							</ul>
 						</div>
 							<ul class="tag-men">
-								<li><span>TAG </span>
-								<span class="women1">   : Phone</span></li>
-								<li><span>Model</span>
-								<span class="women1">:IPhone7 </span></li>
+								<li><span>BRAND</span>
+								<span class="women1"> : <?php echo $brand["brand"]; ?></span></li>
+								<li><span>MODEL</span>
+								<span class="women1"> : <?php echo $brand["model"]; ?> </span></li>
 							</ul>
 								<a href="#" class="add-cart item_add">ADD TO CART</a>
 							
