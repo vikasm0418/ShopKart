@@ -31,7 +31,8 @@
 				</div>
 		  <div class=" h_menu4">
 				<ul class="memenu skyblue">
-				<li class="active grid"><a class="color8" href="brands.php">Brands</a></li>
+				<li ><a class="color4" href="brands.php">Brands</a></li>
+				<li ><a class="color6" href="categories.php">Categories</a></li>
 				<li><a class="color4" href="products.php">Products</a></li>				
 				<li><a class="color6" href="contact.php">Contact</a></li>
 			  </ul> 
