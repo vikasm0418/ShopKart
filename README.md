@@ -2,8 +2,8 @@
 An online Shopping site .
 
 Languages & Framework involved
-# Front-end
-1.HTML, CSS, Bootstrap, Jquery
+*Front-end
+HTML, CSS, Bootstrap, Jquery
 
-# Back-end
+*Back-end
 PHP & MySql, Javascript & Jquery, Ajax
