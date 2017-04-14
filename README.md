@@ -1,7 +1,8 @@
 # ShopKart
 An online Shopping site .
 
-Languages & Framework involved
+Languages & Framework involved .
+
 *Front-end
 HTML, CSS, Bootstrap, Jquery
 
