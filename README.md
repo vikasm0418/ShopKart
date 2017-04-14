@@ -1,13 +1,18 @@
 # ShopKart
 An online Shopping site .
 
-Languages & Framework involved .
+##Languages & Framework involved *
 
-*Front-end
+1.Front-end
 
-HTML, CSS, Bootstrap, Jquery
+  * HTML  
+  * CSS
+  * Bootstrap 
+  * Jquery
 
 
-*Back-end
+2.Back-end
 
-PHP & MySql, Javascript & Jquery, Ajax
+  * PHP & MySql
+  * Javascript & Jquery
+  * Ajax
