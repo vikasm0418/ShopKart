@@ -1,8 +1,12 @@
 <?php
-	require '../storescripts/connect_to_mysql.php';
+	require $_SERVER['DOCUMENT_ROOT'].'/ShopKart/storescripts/connect_to_mysql.php';
 ?>
 <?php include 'includes/head.php' ;
 	  include 'includes/nav.php' ;
+	  
+	  if(!is_logged_in()){
+	  	login_error_redirect();
+	  }
 	  
 	  //get brands from database
 	  $sql = "SELECT * FROM brand ORDER BY brand";
@@ -103,9 +107,8 @@
 	<?php endwhile; ?>
 	</tbody>
 </table><hr><br>
-<?php include 'includes/foot.php' ;	?>
+<?php include 'includes/foot.php' ; ?>
 </body>
 </html>
-
 
 			
