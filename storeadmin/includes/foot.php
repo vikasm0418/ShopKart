@@ -43,3 +43,28 @@ and promo</p>
 		<p >© 2017 ShopKart All Rights Reserved</p>
 		</div>
 		</div>
+<script>
+function updateSizes(){
+	var sizeString ='';
+	for(var i=1;i<=12;i++){
+		if(jQuery('#size'+i).val()!=''){
+			sizeString += jQuery('#size'+i).val()+':'+jQuery('#qty'+i).val()+',';
+		}
+	}
+	jQuery('#sizes').val(sizeString);
+}
+
+function get_child_options(){
+	var parentID = jQuery('#parent').val();
+	jQuery.ajax({
+		url: '/ShopKart/storeadmin/parser/child_categories.php',
+		type:'POST',
+		data:{parentID:parentID},
+		success:function(data){
+			jQuery('#child').html(data);
+		},
+		error:function(){alert("Something went wrong with the child options.")},
+	});
+}
+jQuery('select[name="parent"]').change(get_child_options);
+</script>
