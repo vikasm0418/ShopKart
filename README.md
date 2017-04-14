@@ -1,7 +1,7 @@
 # ShopKart
 An online Shopping site .
 
-##Languages & Framework involved
+## Languages & Framework involved
 
 1.Front-end
 
