@@ -2,96 +2,24 @@
 	require 'storescripts/connect_to_mysql.php';
 ?>
 <?php include 'includes/head.php' ;
-	  include 'includes/nav.php' ;	
-	  $product_id = $_GET['id'];	
+	  include 'includes/nav.php' ;
+	  if(isset($_GET['id'])){	
+		  $product_id = $_GET['id'];
+		}
+	  if(isset($_GET['add'])){
+	  	  $product_id = $_GET['add'];	
+	  }	
+	  if($_POST['submit']){
+
+	  	//Add brand to database
+	  	$csql = "INSERT INTO cart (user_id,paid,product_id) VALUES (3,0,'$product_id')";
+	  	$cresult = mysqli_query($con,$csql);
+	  	header('Location:index.php');
+	  }	
 ?>
 
 <body>
-		<div class="product">
-			<div class="container">
-				<div class="col-md-3 product-price">
-					  
-				<div class=" rsidebar span_1_of_left">
-					<div class="of-left">
-						<h3 class="cate">Categories</h3>
-					</div>
-		 <ul class="menu">
-		<li class="item1"><a href="#">Men </a>
-			<ul class="cute">
-				<li class="subitem1"><a href="#">Cute Kittens </a></li>
-				<li class="subitem2"><a href="#">Strange Stuff </a></li>
-				<li class="subitem3"><a href="#">Automatic Fails </a></li>
-			</ul>
-		</li>
-		<li class="item2"><a href="#">Women </a>
-			<ul class="cute">
-				<li class="subitem1"><a href="#">Cute Kittens </a></li>
-				<li class="subitem2"><a href="#">Strange Stuff </a></li>
-				<li class="subitem3"><a href="#">Automatic Fails </a></li>
-			</ul>
-		</li>
-		<li class="item3"><a href="#">Kids</a>
-			<ul class="cute">
-				<li class="subitem1"><a href="#">Cute Kittens </a></li>
-				<li class="subitem2"><a href="#">Strange Stuff </a></li>
-				<li class="subitem3"><a href="#">Automatic Fails</a></li>
-			</ul>
-		</li>
-		<li class="item4"><a href="#">Accesories</a>
-			<ul class="cute">
-				<li class="subitem1"><a href="#">Cute Kittens </a></li>
-				<li class="subitem2"><a href="#">Strange Stuff </a></li>
-				<li class="subitem3"><a href="#">Automatic Fails</a></li>
-			</ul>
-		</li>
-				
-		<li class="item4"><a href="#">Shoes</a>
-			<ul class="cute">
-				<li class="subitem1"><a href="#">Cute Kittens </a></li>
-				<li class="subitem2"><a href="#">Strange Stuff </a></li>
-				<li class="subitem3"><a href="product.html">Automatic Fails </a></li>
-			</ul>
-		</li>
-	</ul>
-					</div>
-				<!--initiate accordion-->
-		<script type="text/javascript">
-			$(function() {
-			    var menu_ul = $('.menu > li > ul'),
-			           menu_a  = $('.menu > li > a');
-			    menu_ul.hide();
-			    menu_a.click(function(e) {
-			        e.preventDefault();
-			        if(!$(this).hasClass('active')) {
-			            menu_a.removeClass('active');
-			            menu_ul.filter(':visible').slideUp('normal');
-			            $(this).addClass('active').next().stop(true,true).slideDown('normal');
-			        } else {
-			            $(this).removeClass('active');
-			            $(this).next().stop(true,true).slideUp('normal');
-			        }
-			    });
-			
-			});
-		</script>
-<!---->
-	<div class="sellers">
-							<div class="of-left-in">
-								<h3 class="tag">Tags</h3>
-							</div>
-								<div class="tags">
-									<ul>
-										<li><a href="#">design</a></li>
-										<li><a href="#">fashion</a></li>
-										<li><a href="#">dress</a></li>
-										
-										<div class="clearfix"> </div>
-									</ul>
-								
-								</div>
-								
-		</div>
-				</div>
+		<?php include 'includes/category.php'; ?>
 <?php
 	$sql = "SELECT * FROM products WHERE id = $product_id";
 	$product_query = mysqli_query($con,$sql);
@@ -104,7 +32,16 @@
 	$size_array = explode(',',$sizes);
 	$color = $product['color'];
 	$color_array = explode(',',$color);
+	$r_sql = "SELECT * FROM review WHERE product_id = $product_id";
+	$review_query = mysqli_query($con,$r_sql);
+	$reviewCount = mysqli_num_rows($review_query);
+	$squery = "SELECT * FROM seller WHERE product_id = '$product_id'";
+	$seller_query = mysqli_query($con,$squery);
 ?>
+<?php 
+	
+?>
+
 	<div class="col-md-9 product-price1">
 		<div class="col-md-5 single-top">		
 		<div class="flexslider">
@@ -140,22 +77,26 @@ $(window).load(function() {
 					<div class="col-md-7 single-top-in simpleCart_shelfItem">
 						<div class="single-para ">
 						<h4><?php echo $product["title"]; ?></h4>
+						<?php while ($review1 = mysqli_fetch_assoc($review_query)) : ?>
+						<?php $sum += $review1['stars'];?>
+						<?php endwhile; ?>
+						<?php $avg = (intval($sum/$reviewCount ));?>
 							<div class="star-on">
 								<ul class="star-footer">
-										<li><a href="#"><i> </i></a></li>
-										<li><a href="#"><i> </i></a></li>
-										<li><a href="#"><i> </i></a></li>
-										<li><a href="#"><i> </i></a></li>
-										<li><a href="#"><i> </i></a></li>
-									</ul>
+									<?php while($avg): ?>
+									<?php $avg -= 1; ?>
+									<li><a href="#"><i> </i></a></li>
+									<?php endwhile; ?>
+								</ul>
 								<div class="review">
-									<a href="#"> 1 customer review </a>
+									<a href="#"> <?= $reviewCount ?> customer review </a>
 									
 								</div>
 							<div class="clearfix"> </div>
 							</div>
 							
 							<h5 class="item_price"><?php echo $product['price']; ?></h5>
+							<form action="single.php?add=<?=$product_id?>"  method="POST"><form action="single.php?add=<?=$product_id?>"  method="POST">
 							<div class="available">
 								<ul>
 									<li>Color<select>
@@ -164,7 +105,7 @@ $(window).load(function() {
 								}?>
 									</select></li>
 							
-								<li class="size-in">Size<select>
+								<li class="size-in" >Size<select>
 									<?php foreach ($size_array as $key => $string) {
 									$string_array = explode(':', $string);
 									$size = $string_array[0];
@@ -182,8 +123,26 @@ $(window).load(function() {
 								<span class="women1"> : <?php echo $brand["brand"]; ?></span></li>
 								<li><span>MODEL</span>
 								<span class="women1"> : <?php echo $brand["model"]; ?> </span></li>
+								<li><span>Seller</span><?php while($seller = mysqli_fetch_assoc($seller_query)) : ?>
+								<span class="women1"> : <?php
+															$userID = $seller['user_id'];
+															$sname = "SELECT * FROM users WHERE id = '$userID'";
+															$seller_name = mysqli_query($con,$sname);
+															$user = mysqli_fetch_assoc($seller_name);
+															echo $user['full_name'];
+														?> </span>
+															<?php endwhile; ?>
+													</li>
+								
 							</ul>
-								<a href="#" class="add-cart item_add">ADD TO CART</a>
+							<?php
+								if(isset($_GET['id'])){
+							 		$product_id = $_GET['id'];
+								 }
+							 	?>
+								
+								<input class="btn btn-default" style="background-color:#f2680c;margin:5px 0px 5px 10px;padding:10px" type="submit" name="submit" value="ADD TO CART" >
+								</form>
 							
 						</div>
 					</div>
@@ -194,7 +153,7 @@ $(window).load(function() {
 				<ul class="cd-tabs-navigation">
 					<li><a data-content="fashion"  href="#0">Description </a></li>
 					<li><a data-content="cinema" href="#0" >Addtional Informatioan</a></li>
-					<li><a data-content="television" href="#0" class="selected ">Reviews (1)</a></li>
+					<li><a data-content="television" href="#0" class="selected ">Reviews (<?= $reviewCount ?>)</a></li>
 					
 				</ul> 
 			</nav>
@@ -209,12 +168,21 @@ $(window).load(function() {
 		<div class="facts1">
 					
 						<div class="color"><p>Color</p>
-							<span >Blue, Black, Red</span>
+							<span ><?php foreach ($color_array as $key => $string) {								
+									echo " ".$string." ";
+								}?></span>
 							<div class="clearfix"></div>
 						</div>
 						<div class="color">
 							<p>Size</p>
-							<span >S, M</span>
+							<span ><?php foreach ($size_array as $key => $string) {
+									$string_array = explode(':', $string);
+									$size = $string_array[0];
+									$quantity = $string_array[1];
+								
+									echo " ".$size." ( ".$quantity." available ), ";
+								}
+									?></span>
 							<div class="clearfix"></div>
 						</div>
 					        
@@ -223,22 +191,24 @@ $(window).load(function() {
 </li>
 <li data-content="television" class="selected">
 	<div class="comments-top-top">
+				
+					<?php while ($review = mysqli_fetch_assoc($review_query)) : ?>
 				<div class="top-comment-left">
-					<img class="img-responsive" src="images/co.png" alt="">
+				<img class="img-responsive" src="images/co.png" alt="">
 				</div>
 				<div class="top-comment-right">
-					<h6><a href="#">Hendri</a> - September 3, 2014</h6>
+					<h6><a href="#"><?= $review['user'] ?></a> </h6>
 					<ul class="star-footer">
-										<li><a href="#"><i> </i></a></li>
-										<li><a href="#"><i> </i></a></li>
-										<li><a href="#"><i> </i></a></li>
-										<li><a href="#"><i> </i></a></li>
-										<li><a href="#"><i> </i></a></li>
-									</ul>
-									<p>Wow nice!</p>
+							<?php while($review['stars']): ?>
+							<?php $review['stars'] -= 1; ?>
+								<li><a href="#"><i> </i></a></li>
+							<?php endwhile; ?>			
+					</ul>
+					<p><?= $review['review'] ?></p>
 				</div>
+				<?php endwhile; ?>
 				<div class="clearfix"> </div>
-				<a class="add-re" href="#">ADD REVIEW</a>
+				<a class="add-re" href="review.php?id=<?= $product['id'] ?>">ADD REVIEW</a>
 			</div>
 
 </li>

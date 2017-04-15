@@ -1,115 +1,37 @@
-<?php include 'includes/head.php' ;
-	  include 'includes/nav.php' ;		
+<?php
+	require 'storescripts/connect_to_mysql.php';
 ?>
+<?php include 'includes/head.php' ;
+	  include 'includes/nav.php' ;	
+	  if(isset($_GET['cat'])){
+	  	$categoryID = $_GET['cat'];
+	  	$prod = "SELECT * FROM products WHERE categories='$categoryID'";
+		$rprod = mysqli_query($con,$prod);
+	  } else{
+	  	$prod = "SELECT * FROM products";
+		$rprod = mysqli_query($con,$prod);
+	  }
+
+?>		
 <body>
 <?php include 'includes/category.php' ?>
 				<div class="col-md-9 product1">
 				<div class=" bottom-product">
+					<?php while($products = mysqli_fetch_assoc($rprod)) : ?>
 					<div class="col-md-4 bottom-cd simpleCart_shelfItem">
 						<div class="product-at ">
-							<a href="single.php"><img class="img-responsive" src="images/pi3.jpg" alt="">
+							<a href="single.php?id=<?= $products['id']; ?>"><img class="img-responsive" src="<?= $products['image']; ?>" alt="">
 							<div class="pro-grid">
 										<span class="buy-in">Buy Now</span>
 							</div>
 						</a>	
 						</div>
 						<p class="tun">click on img to view</p>
-						<a href="#" class="item_add"><p class="number item_price"><i> </i>$500.00</p></a>						
+						<a href="#" class="item_add"><p class="number item_price"><i> </i><?= $parent1['price']; ?></p></a>						
 					</div>
-					<div class="col-md-4 bottom-cd simpleCart_shelfItem">
-						<div class="product-at ">
-							<a href="single.php"><img class="img-responsive" src="images/pi1.jpg" alt="">
-							<div class="pro-grid">
-										<span class="buy-in">Buy Now</span>
-							</div>
-						</a>	
-						</div>
-						<p class="tun">click on img to view</p>
-<a href="#" class="item_add"><p class="number item_price"><i> </i>$500.00</p></a>					</div>
-					<div class="col-md-4 bottom-cd simpleCart_shelfItem">
-						<div class="product-at ">
-							<a href="single.php"><img class="img-responsive" src="images/pi4.jpg" alt="">
-							<div class="pro-grid">
-										<span class="buy-in">Buy Now</span>
-							</div>
-						</a>	
-						</div>
-						<p class="tun">click on img to view</p>
-<a href="#" class="item_add"><p class="number item_price"><i> </i>$500.00</p></a>					</div>
+					<?php endwhile; ?>
 					<div class="clearfix"> </div>
 				</div>
-					<div class=" bottom-product">
-					<div class="col-md-4 bottom-cd simpleCart_shelfItem">
-						<div class="product-at ">
-							<a href="single.php"><img class="img-responsive" src="images/pi5.jpg" alt="">
-							<div class="pro-grid">
-										<span class="buy-in">Buy Now</span>
-							</div>
-						</a>	
-						</div>
-						<p class="tun">click on img to view</p>
-<a href="#" class="item_add"><p class="number item_price"><i> </i>$500.00</p></a>					</div>
-					<div class="col-md-4 bottom-cd simpleCart_shelfItem">
-						<div class="product-at ">
-							<a href="single.php"><img class="img-responsive" src="images/pi.jpg" alt="">
-							<div class="pro-grid">
-										<span class="buy-in">Buy Now</span>
-							</div>
-						</a>	
-						</div>
-						<p class="tun">click on img to view</p>
-<a href="#" class="item_add"><p class="number item_price"><i> </i>$500.00</p></a>					
-</div>
-					<div class="col-md-4 bottom-cd simpleCart_shelfItem">
-						<div class="product-at ">
-							<a href="single.php"><img class="img-responsive" src="images/pi1.jpg" alt="">
-							<div class="pro-grid">
-										<span class="buy-in">Buy Now</span>
-							</div>
-						</a>	
-						</div>
-						<p class="tun">click on img to view</p>
-<a href="#" class="item_add"><p class="number item_price"><i> </i>$500.00</p></a>					</div>
-					<div class="clearfix"> </div>
-				</div>
-					<div class=" bottom-product">
-					<div class="col-md-4 bottom-cd simpleCart_shelfItem">
-						<div class="product-at ">
-							<a href="single.php"><img class="img-responsive" src="images/pi3.jpg" alt="">
-							<div class="pro-grid">
-										<span class="buy-in">Buy Now</span>
-							</div>
-						</a>	
-						</div>
-						<p class="tun">click on img to view</p>
-					<a href="#" class="item_add"><p class="number item_price"><i> </i>$500.00</p></a>					
-
-					</div>
-					<div class="col-md-4 bottom-cd simpleCart_shelfItem">
-						<div class="product-at ">
-							<a href="single.php"><img class="img-responsive" src="images/pi4.jpg" alt="">
-							<div class="pro-grid">
-										<span class="buy-in">Buy Now</span>
-							</div>
-						</a>	
-						</div>
-						<p class="tun">click on img to view</p>
-<a href="#" class="item_add"><p class="number item_price"><i> </i>$500.00</p></a>					
-</div>
-					<div class="col-md-4 bottom-cd simpleCart_shelfItem">
-						<div class="product-at ">
-							<a href="single.php"><img class="img-responsive" src="images/pi5.jpg" alt="">
-							<div class="pro-grid">
-										<span class="buy-in">Buy Now</span>
-							</div>
-						</a>	
-						</div>
-						<p class="tun">click on img to view</p>
-<a href="#" class="item_add"><p class="number item_price"><i> </i>$500.00</p></a>					
-</div>
-					<div class="clearfix"> </div>
-				</div>
-				
 				</div>
 		<div class="clearfix"> </div>
 		<nav class="in">

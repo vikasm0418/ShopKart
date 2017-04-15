@@ -1,3 +1,6 @@
+<?php
+	require 'storescripts/connect_to_mysql.php';
+?>
 <?php include 'includes/head.php' ;
 	  include 'includes/nav.php' ;		
 ?>
