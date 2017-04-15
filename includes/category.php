@@ -1,3 +1,8 @@
+<?php 
+	
+	$csql1 = "SELECT * FROM categories WHERE parent = 0";
+	$categ1 = mysqli_query($con,$csql1);
+?>
 <div class="product">
 			<div class="container">
 				<div class="col-md-3 product-price">
@@ -6,45 +11,23 @@
 					<div class="of-left">
 						<h3 class="cate">Categories</h3>
 					</div>
-		 <ul class="menu">
-		<li class="item1"><a href="#">Men </a>
-			<ul class="cute">
-				<li class="subitem1"><a href="#">Cute Kittens </a></li>
-				<li class="subitem2"><a href="#">Strange Stuff </a></li>
-				<li class="subitem3"><a href="#">Automatic Fails </a></li>
-			</ul>
-		</li>
-		<li class="item2"><a href="#">Women </a>
-			<ul class="cute">
-				<li class="subitem1"><a href="#">Cute Kittens </a></li>
-				<li class="subitem2"><a href="#">Strange Stuff </a></li>
-				<li class="subitem3"><a href="#">Automatic Fails </a></li>
-			</ul>
-		</li>
-		<li class="item3"><a href="#">Kids</a>
-			<ul class="cute">
-				<li class="subitem1"><a href="#">Cute Kittens </a></li>
-				<li class="subitem2"><a href="#">Strange Stuff </a></li>
-				<li class="subitem3"><a href="#">Automatic Fails</a></li>
-			</ul>
-		</li>
-		<li class="item4"><a href="#">Accesories</a>
-			<ul class="cute">
-				<li class="subitem1"><a href="#">Cute Kittens </a></li>
-				<li class="subitem2"><a href="#">Strange Stuff </a></li>
-				<li class="subitem3"><a href="#">Automatic Fails</a></li>
-			</ul>
-		</li>
-				
-		<li class="item4"><a href="#">Shoes</a>
-			<ul class="cute">
-				<li class="subitem1"><a href="#">Cute Kittens </a></li>
-				<li class="subitem2"><a href="#">Strange Stuff </a></li>
-				<li class="subitem3"><a href="product.php">Automatic Fails </a></li>
-			</ul>
-		</li>
-	</ul>
-					</div>
+		<ul class="menu">
+		 	<?php while($parent1 = mysqli_fetch_assoc($categ1)) : ?>
+		 	<?php 
+				$parentID1 = $parent1['id'];
+				$ssql1 = "SELECT * FROM categories WHERE parent = '$parentID1'";
+				$sub_categ1 = mysqli_query($con,$ssql1);
+		 	?>
+			<li class="item1"><a href="#"><?= $parent1['category']; ?> </a>
+				<ul class="cute">
+					<?php while($child1 = mysqli_fetch_assoc($sub_categ1)) : ?>
+					<li class="subitem1"><a href="products.php?cat=<?= $child1['id']; ?>"><?= $child1['category']; ?></a></li>
+					<?php endwhile; ?>
+				</ul>
+			</li>
+			<?php endwhile; ?>
+		</ul>
+				</div>
 				<!--initiate accordion-->
 		<script type="text/javascript">
 			$(function() {
