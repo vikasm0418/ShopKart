@@ -4,6 +4,10 @@
 <?php include 'includes/head.php' ;
 	  include 'includes/nav.php' ;
 	  
+	  if(!is_logged_in()){
+	  	login_error_redirect();
+	  }
+
 	  //get brands from database
 	  $sql = "SELECT * FROM products WHERE deleted = 1";
 	  $result = mysqli_query($con,$sql);
