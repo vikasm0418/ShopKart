@@ -126,7 +126,7 @@
 	  	}else{
 	  		//upload files and insert into database
 	  		move_uploaded_file($tmpLoc, $uploadLoc);
-	  		$insertSql = "INSERT INTO products (title,price,brand,categories,image,description,featured,sizes,img2,img3,color,deleted) VALUES ('$title','$price','$brand','$categories','$dbpath','$description',0,'$sizes','$dbpath2','$dbpath3','$color',0)";
+	  		$insertSql = "INSERT INTO products (title,price,brand,categories,image,description,featured,sizes,img2,img3,color,deleted,seller) VALUES ('$title','$price','$brand','$categories','$dbpath','$description',0,'$sizes','$dbpath2','$dbpath3','$color',0,1)";
 	  		$query = mysqli_query($con,$insertSql);
 	  		header('Location:products.php');
 	  	}
