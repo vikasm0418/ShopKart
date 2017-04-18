@@ -191,7 +191,8 @@ $(window).load(function() {
 </li>
 <li data-content="television" class="selected">
 	<div class="comments-top-top">
-				
+				$r_sql = "SELECT * FROM products WHERE product_id = $product_id";
+					$review_query = mysqli_query($con,$r_sql);
 					<?php while ($review = mysqli_fetch_assoc($review_query)) : ?>
 				<div class="top-comment-left">
 				<img class="img-responsive" src="images/co.png" alt="">
